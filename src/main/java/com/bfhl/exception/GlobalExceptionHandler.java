@@ -47,6 +47,19 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * Handles unsupported Content-Type media types.
+     */
+    @ExceptionHandler(org.springframework.web.HttpMediaTypeNotSupportedException.class)
+    public ResponseEntity<ErrorResponse> handleUnsupportedMediaType(org.springframework.web.HttpMediaTypeNotSupportedException ex) {
+        return ResponseEntity
+                .status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
+                .body(ErrorResponse.builder()
+                        .isSuccess(false)
+                        .error("Unsupported Content-Type. Please set the 'Content-Type' header to 'application/json'")
+                        .build());
+    }
+
+    /**
      * Catch-all handler for unexpected exceptions.
      */
     @ExceptionHandler(Exception.class)

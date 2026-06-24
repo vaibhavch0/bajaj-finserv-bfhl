@@ -145,4 +145,15 @@ class BfhlControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message", containsString("running")));
     }
+
+    @Test
+    @DisplayName("POST /bfhl — unsupported Content-Type returns 415")
+    void testUnsupportedMediaType() throws Exception {
+        mockMvc.perform(post("/bfhl")
+                        .contentType(MediaType.TEXT_PLAIN)
+                        .content("some plain text"))
+                .andExpect(status().isUnsupportedMediaType())
+                .andExpect(jsonPath("$.is_success", is(false)))
+                .andExpect(jsonPath("$.error", containsString("Unsupported Content-Type")));
+    }
 }
