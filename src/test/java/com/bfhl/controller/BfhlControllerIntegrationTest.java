@@ -129,4 +129,20 @@ class BfhlControllerIntegrationTest {
                 .andExpect(jsonPath("$.sum", is("0")))
                 .andExpect(jsonPath("$.concat_string", is("")));
     }
+
+    @Test
+    @DisplayName("GET /bfhl — returns 200 with operation_code 1")
+    void testGetOperationCode() throws Exception {
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get("/bfhl"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.operation_code", is(1)));
+    }
+
+    @Test
+    @DisplayName("GET / — returns 200 with welcome message")
+    void testGetRoot() throws Exception {
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get("/"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message", containsString("running")));
+    }
 }

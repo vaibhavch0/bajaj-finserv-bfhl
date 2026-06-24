@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
  * POST /bfhl — processes an array of strings and returns categorized data.
  */
 @RestController
-@RequestMapping("/bfhl")
 public class BfhlController {
 
     private final BfhlService bfhlService;
@@ -29,7 +28,7 @@ public class BfhlController {
      * @param request validated request body
      * @return 200 OK with BfhlResponse
      */
-    @PostMapping
+    @PostMapping("/bfhl")
     public ResponseEntity<BfhlResponse> process(@Valid @RequestBody BfhlRequest request) {
         BfhlResponse response = bfhlService.process(request);
         return ResponseEntity.ok(response);
@@ -37,13 +36,22 @@ public class BfhlController {
 
     /**
      * GET /bfhl
-     * Friendly message for browser/curl GET requests.
+     * Returns operation code as per BFHL requirements.
      */
-    @GetMapping
-    public ResponseEntity<java.util.Map<String, String>> info() {
+    @GetMapping("/bfhl")
+    public ResponseEntity<java.util.Map<String, Object>> getOperationCode() {
+        return ResponseEntity.ok(java.util.Map.of("operation_code", 1));
+    }
+
+    /**
+     * GET /
+     * Root endpoint to prevent "No static resource" errors when visiting the primary URL.
+     */
+    @GetMapping("/")
+    public ResponseEntity<java.util.Map<String, String>> welcome() {
         return ResponseEntity.ok(java.util.Map.of(
-                "message", "BFHL API is running. Use POST /bfhl with a JSON body: {\"data\": [...]}",
-                "status", "UP"
+                "message", "BFHL REST API is running. Send a POST request to /bfhl with a JSON body: {\"data\": [...]}",
+                "get_endpoint", "/bfhl"
         ));
     }
 }
