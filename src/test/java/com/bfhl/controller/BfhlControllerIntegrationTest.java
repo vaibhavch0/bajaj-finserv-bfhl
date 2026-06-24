@@ -156,4 +156,12 @@ class BfhlControllerIntegrationTest {
                 .andExpect(jsonPath("$.is_success", is(false)))
                 .andExpect(jsonPath("$.error", containsString("Unsupported Content-Type")));
     }
+
+    @Test
+    @DisplayName("GET /health — returns 200 with operation_code 1")
+    void testGetHealthOperationCode() throws Exception {
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get("/health"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.operation_code", is(1)));
+    }
 }
