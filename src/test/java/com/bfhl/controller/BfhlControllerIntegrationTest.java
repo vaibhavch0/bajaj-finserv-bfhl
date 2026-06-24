@@ -158,10 +158,10 @@ class BfhlControllerIntegrationTest {
     }
 
     @Test
-    @DisplayName("GET /health — returns 200 with operation_code 1")
-    void testGetHealthOperationCode() throws Exception {
+    @DisplayName("GET /health — returns 200 with status OK")
+    void testGetHealthStatus() throws Exception {
         mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get("/health"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.operation_code", is(1)));
+                .andExpect(jsonPath("$.status", is("OK")));
     }
 }

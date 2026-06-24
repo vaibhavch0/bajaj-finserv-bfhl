@@ -35,12 +35,21 @@ public class BfhlController {
     }
 
     /**
-     * GET /bfhl and GET /health
+     * GET /bfhl
      * Returns operation code as per BFHL requirements.
      */
-    @GetMapping({"/bfhl", "/health"})
+    @GetMapping("/bfhl")
     public ResponseEntity<java.util.Map<String, Object>> getOperationCode() {
         return ResponseEntity.ok(java.util.Map.of("operation_code", 1));
+    }
+
+    /**
+     * GET /health
+     * Returns service health status.
+     */
+    @GetMapping("/health")
+    public ResponseEntity<java.util.Map<String, String>> health() {
+        return ResponseEntity.ok(java.util.Map.of("status", "OK"));
     }
 
     /**
