@@ -7,7 +7,9 @@ RUN mvn clean package -DskipTests
 
 # Runtime stage
 FROM eclipse-temurin:17-jre-alpine
+RUN adduser -D -u 1000 user
 WORKDIR /app
-COPY --from=build /app/target/bfhl-api-1.0.0.jar app.jar
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+COPY --from=build --chown=user:user /app/target/bfhl-api-1.0.0.jar app.jar
+USER user
+EXPOSE 7860
+ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=7860"]
